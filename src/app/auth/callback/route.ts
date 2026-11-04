@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { isAuthorizedSuperadminEmail } from "@/lib/authorized-superadmins";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -14,5 +15,12 @@ export async function GET(request: Request) {
   }
 
   const { data: { user } } = await supabase.auth.getUser();
+  if (user && isAuthorizedSuperadminEmail(user.email)) {
+    await supabase
+      .from("profiles")
+      .update({ is_superadmin: true })
+      .eq("id", user.id);
+  }
+
   return NextResponse.redirect(new URL(user ? "/studio" : "/login?error=Sign-in%20did%20not%20complete", url.origin));
 }
