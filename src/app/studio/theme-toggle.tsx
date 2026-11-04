@@ -1,0 +1,4 @@
+"use client";
+import {useEffect,useState} from "react";
+type Theme="system"|"light"|"dark";
+export function ThemeToggle(){const[theme,setTheme]=useState<Theme>(()=>typeof window==="undefined"?"system":((localStorage.getItem("pcs-theme") as Theme)||"system"));useEffect(()=>{document.documentElement.dataset.theme=theme==="system"?"":theme},[theme]);function change(next:Theme){setTheme(next);localStorage.setItem("pcs-theme",next)}return <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider"><span className="hidden sm:inline">Theme</span><select className="border border-[var(--line)] bg-[var(--card)] px-2 py-2" value={theme} onChange={e=>change(e.target.value as Theme)}><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label>}

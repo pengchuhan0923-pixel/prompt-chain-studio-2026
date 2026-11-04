@@ -1,0 +1,2 @@
+import Link from "next/link";
+export default function Page(){return <main className="grid min-h-screen place-items-center p-6"><section className="card max-w-lg p-10"><p className="text-xs font-black uppercase tracking-[.25em] text-red-500">403 · Restricted</p><h1 className="mt-4 text-4xl font-black">Superadmins only.</h1><p className="mt-4 text-[var(--muted)]">Your account is signed in, but profiles.is_superadmin is not TRUE.</p><Link href="/login" className="mt-7 inline-block font-black underline">Try another account</Link></section></main>}

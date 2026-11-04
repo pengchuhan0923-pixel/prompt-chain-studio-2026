@@ -1,0 +1,5 @@
+@import "tailwindcss";
+:root{--paper:#f6f1e7;--ink:#171713;--card:#fffdf8;--line:#d8d0c2;--muted:#6d695f;--acid:#c9ff45;--violet:#6847e8;color-scheme:light}
+:root[data-theme="dark"]{--paper:#11120f;--ink:#f4f0e7;--card:#1a1c17;--line:#383a32;--muted:#aaa79e;--acid:#b7ef3b;--violet:#9a82ff;color-scheme:dark}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#11120f;--ink:#f4f0e7;--card:#1a1c17;--line:#383a32;--muted:#aaa79e;--acid:#b7ef3b;--violet:#9a82ff;color-scheme:dark}}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}.card{background:var(--card);border:1px solid var(--line);box-shadow:5px 5px 0 var(--ink)}.field{width:100%;border:1px solid var(--line);background:var(--paper);padding:.75rem .85rem;color:var(--ink);outline:none}.field:focus{border-color:var(--violet);box-shadow:0 0 0 2px color-mix(in srgb,var(--violet) 25%,transparent)}button,a{transition:transform .15s,opacity .15s}button:not(:disabled):active,a:active{transform:translate(1px,1px)}button:disabled{opacity:.45;cursor:not-allowed}
