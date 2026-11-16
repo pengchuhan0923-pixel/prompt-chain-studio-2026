@@ -1,6 +1,13 @@
-# Prompt Chain Studio — Week 8
+# Prompt Chain Studio — Semester Project Iteration 1
 
 A superadmin-only Next.js tool for creating, editing, deleting, and reordering prompt chains and their steps. Chains generate text media with the OpenAI Responses API, and every run is saved in the existing Week 7 Supabase generation ledger.
+
+## Week 9 first version
+
+The PM-reviewable first version focuses on a campus content manager who needs
+repeatable, on-brand caption workflows. It adds a one-click three-step starter,
+clear input-to-output guidance, visual connections between ordered steps, and a
+compact review checklist while retaining the complete chain editor and history.
 
 ## Setup
 

@@ -16,6 +16,51 @@ export async function createChain(form: FormData) {
   refresh();
 }
 
+export async function createStarterChain() {
+  const { supabase } = await requireSuperadmin();
+  const { data: chain, error: chainError } = await supabase
+    .from("prompt_chains")
+    .insert({
+      name: "Caption Sprint",
+      description: "Turn one visual idea into five concise, funny captions.",
+      is_active: true,
+    })
+    .select("id")
+    .single();
+
+  if (chainError || !chain) {
+    throw new Error(chainError?.message || "Could not create the starter chain.");
+  }
+
+  const { error: stepsError } = await supabase.from("prompt_chain_steps").insert([
+    {
+      prompt_chain_id: chain.id,
+      name: "Describe the scene",
+      template: "Describe the scene clearly and objectively. Focus on the visual details that could support a joke.",
+      step_order: 1,
+    },
+    {
+      prompt_chain_id: chain.id,
+      name: "Find the comic angle",
+      template: "Identify the funniest contrast, surprise, or relatable tension in the description.",
+      step_order: 2,
+    },
+    {
+      prompt_chain_id: chain.id,
+      name: "Write five captions",
+      template: "Write five short, distinct captions based on the comic angle. Return only the captions.",
+      step_order: 3,
+    },
+  ]);
+
+  if (stepsError) {
+    await supabase.from("prompt_chains").delete().eq("id", chain.id);
+    throw new Error(stepsError.message);
+  }
+
+  refresh();
+}
+
 export async function updateChain(form: FormData) {
   const { supabase } = await requireSuperadmin();
   const { error } = await supabase.from("prompt_chains").update({ name: clean(form.get("name"), 80), description: clean(form.get("description"), 240) }).eq("id", id(form, "chain_id"));
