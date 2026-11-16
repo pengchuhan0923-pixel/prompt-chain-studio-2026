@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
+const canonicalAppUrl = "https://prompt-chain-studio-2026.vercel.app";
+
 export default function Login() {
   const [message, setMessage] = useState("");
 
@@ -12,7 +14,10 @@ export default function Login() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        // Commit-specific Vercel URLs change after every deployment and are
+        // not all present in Supabase's OAuth redirect allowlist. Always
+        // finish sign-in on the stable production domain instead.
+        redirectTo: `${canonicalAppUrl}/auth/callback`,
         queryParams: { prompt: "select_account" },
       },
     });
